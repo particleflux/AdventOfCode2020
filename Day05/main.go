@@ -27,7 +27,6 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	ids := make([]int, 0)
-	highest := -1
 	for {
 		var line string
 		line, err := reader.ReadString('\n')
@@ -36,20 +35,16 @@ func main() {
 		}
 
 		line = strings.TrimSpace(line)
-		id := getId(getNumber(line[:7]), getNumber(line[7:]))
-		if id > highest {
-			highest = id
-		}
-
-		ids = append(ids, id)
+		ids = append(ids, getId(getNumber(line[:7]), getNumber(line[7:])))
 	}
 
-	fmt.Println(highest)
-
 	sort.Ints(ids)
+	fmt.Println(ids[len(ids) - 1])
+
 	for i := 0; i < len(ids)-1; i++ {
 		if ids[i+1]-ids[i] == 2 {
 			fmt.Println(ids[i] + 1)
+			break
 		}
 	}
 }
